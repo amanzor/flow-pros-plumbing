@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow Pros Plumbing | Veteran-Owned 24/7 Plumbers in Miami &amp; South Florida</title>
+  <meta name="description" content="Flow Pros Plumbing LLC — veteran-owned, licensed &amp; insured plumbers serving Miami-Dade and Broward. 24/7 emergency plumbing, leak detection, drain cleaning, water heaters, repiping, sewer lines and hydro jetting." />
+  <meta name="theme-color" content="#050814" />
+  <meta property="og:title" content="Flow Pros Plumbing — We Make Leaks Disappear" />
+  <meta property="og:description" content="Veteran-owned, licensed &amp; insured plumbers serving Miami-Dade &amp; Broward 24/7." />
+  <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Plumber",
+    "name": "Flow Pros Plumbing LLC",
+    "image": "assets/logo.png",
+    "telephone": ["+1-786-857-1560", "+1-954-993-3020"],
+    "email": "Info@theflowprosplumbing.com",
+    "url": "https://theflowprosplumbing.com/",
+    "areaServed": ["Miami-Dade County, FL", "Broward County, FL"],
+    "openingHours": "Mo-Sa 08:00-18:00",
+    "slogan": "Veteran Owned & Operated"
+  }
+  </script>
+</head>
+<body class="is-loading">
+
+  <!-- SVG filters (liquid / goo) -->
+  <svg class="sr-defs" aria-hidden="true" width="0" height="0">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+      <filter id="morph-threshold">
+        <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140" />
+      </filter>
+      <filter id="wobble">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="3" result="noise">
+          <animate attributeName="baseFrequency" dur="9s" values="0.012 0.03;0.02 0.05;0.012 0.03" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__orb">
+      <img src="assets/logo.webp" alt="" class="preloader__logo preloader__logo--ghost" />
+      <div class="preloader__fill" id="preFill">
+        <img src="assets/logo.webp" alt="" class="preloader__logo" />
+      </div>
+      <svg class="preloader__wave" id="preWave" viewBox="0 0 200 20" preserveAspectRatio="none">
+        <path d="M0 10 Q 25 0 50 10 T 100 10 T 150 10 T 200 10 V20 H0Z" />
+      </svg>
+    </div>
+    <div class="preloader__meta">
+      <span class="mono">PRESSURIZING LINES</span>
+      <span class="mono preloader__pct" id="prePct">0%</span>
+    </div>
+    <div class="preloader__drop" id="preDrop"></div>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+
+  <!-- Scroll pipe progress -->
+  <div class="pipe-progress" aria-hidden="true">
+    <div class="pipe-progress__track"><div class="pipe-progress__water" id="pipeWater"></div></div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__brand" aria-label="Flow Pros Plumbing home">
+      <img src="assets/logo.webp" alt="Flow Pros Plumbing logo" width="52" height="52" />
+      <span class="nav__name">Flow Pros<small>Plumbing LLC</small></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#story">How We Work</a>
+      <a href="#services">Services</a>
+      <a href="#veteran">About</a>
+      <a href="#areas">Areas</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav__cta">
+      <a href="tel:+17868571560" class="btn btn--fire btn--sm magnetic">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        <span>786-857-1560</span>
+      </a>
+      <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#story">How We Work</a>
+    <a href="#services">Services</a>
+    <a href="#veteran">About</a>
+    <a href="#areas">Areas</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+    <div class="mobile-menu__phones">
+      <a href="tel:+17868571560">(786) 857-1560</a>
+      <a href="tel:+19549933020">(954) 993-3020</a>
+    </div>
+  </div>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <canvas class="hero__gl" id="heroGL" aria-hidden="true"></canvas>
+      <div class="hero__vignette" aria-hidden="true"></div>
+      <canvas class="hero__fx" id="heroFX" aria-hidden="true"></canvas>
+
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow hero__eyebrow"><span class="pulse-dot"></span> 24/7 Emergency Plumbing · Miami &amp; South Florida</p>
+          <h1 class="hero__title">
+            <span class="line"><span class="word">We make</span></span>
+            <span class="line"><span class="word word--liquid">leaks</span></span>
+            <span class="line"><span class="word word--fire">disappear.</span></span>
+          </h1>
+          <p class="hero__sub">Veteran-owned, licensed &amp; insured plumbers who find the problem, fix it right the first time, and get your water flowing again, across Miami-Dade and Broward.</p>
+          <div class="hero__ctas">
+            <a href="tel:+17868571560" class="btn btn--fire magnetic"><span>Call Now: 786-857-1560</span></a>
+            <a href="#contact" class="btn btn--glass magnetic"><span>Get a Free Quote</span></a>
+          </div>
+          <ul class="hero__badges">
+            <li><span>✦</span> Licensed &amp; Insured</li>
+            <li><span>✦</span> Same-Day Service*</li>
+            <li><span>✦</span> Veteran Owned</li>
+          </ul>
+        </div>
+
+        <div class="hero__emblem" id="heroEmblem">
+          <div class="emblem__rings" aria-hidden="true">
+            <span class="ring ring--1"></span>
+            <span class="ring ring--2"></span>
+            <span class="ring ring--3"></span>
+          </div>
+          <svg class="emblem__runes" viewBox="0 0 400 400" aria-hidden="true">
+            <defs><path id="runePath" d="M200,200 m-170,0 a170,170 0 1,1 340,0 a170,170 0 1,1 -340,0" /></defs>
+            <text><textPath href="#runePath">✦ FIND IT ✦ FIX IT ✦ FLOW ✦ VETERAN OWNED &amp; OPERATED ✦ LICENSED &amp; INSURED ✦ 24/7 ✦</textPath></text>
+          </svg>
+          <div class="emblem__blob" aria-hidden="true"></div>
+          <img src="assets/logo.webp" alt="Flow Pros Plumbing — the plumbing wizard" class="emblem__logo" width="450" height="450" />
+          <div class="emblem__drip" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <a href="#story" class="hero__scroll" aria-label="Scroll to explore">
+        <span class="mono">Scroll to dive in</span>
+        <span class="hero__scroll-drop"></span>
+      </a>
+
+      <svg class="wave-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path class="wave-a" d="M0,60 C240,110 480,10 720,60 C960,110 1200,10 1440,60 L1440,120 L0,120 Z" />
+        <path class="wave-b" d="M0,80 C240,40 480,120 720,80 C960,40 1200,120 1440,80 L1440,120 L0,120 Z" />
+      </svg>
+    </section>
+
+    <!-- ============ STORY: THE WIZARD'S DESCENT ============ -->
+    <section class="story" id="story" aria-label="How we find and fix plumbing problems">
+      <div class="story__stage" id="stage">
+
+        <!-- Scene 1: The bathroom / tub -->
+        <div class="scene scene--bath" id="sceneBath">
+          <svg class="bath" id="bathSVG" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0b1538" />
+                <stop offset="1" stop-color="#070d24" />
+              </linearGradient>
+              <pattern id="tiles" width="60" height="60" patternUnits="userSpaceOnUse">
+                <rect width="60" height="60" fill="none" />
+                <path d="M60 0H0V60" fill="none" stroke="#1a2a5c" stroke-width="2" />
+              </pattern>
+              <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0d1a40" />
+                <stop offset="1" stop-color="#050a1c" />
+              </linearGradient>
+              <linearGradient id="tubG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#f4f8ff" />
+                <stop offset=".55" stop-color="#c9d6ef" />
+                <stop offset="1" stop-color="#7d8fb8" />
+              </linearGradient>
+              <linearGradient id="tubInner" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#8ea2c9" />
+                <stop offset="1" stop-color="#dfe8f8" />
+              </linearGradient>
+              <linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#6fd6ff" stop-opacity=".85" />
+                <stop offset="1" stop-color="#1d6fd6" stop-opacity=".9" />
+              </linearGradient>
+              <radialGradient id="drainG" cx=".5" cy=".5" r=".5">
+                <stop offset="0" stop-color="#000" />
+                <stop offset=".7" stop-color="#03050d" />
+                <stop offset=".85" stop-color="#3a4766" />
+                <stop offset="1" stop-color="#b9c5dc" />
+              </radialGradient>
+              <radialGradient id="glowRed" cx=".5" cy=".5" r=".5">
+                <stop offset="0" stop-color="#ff3b3b" stop-opacity=".9" />
+                <stop offset="1" stop-color="#ff3b3b" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="chromeG" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#6b7a99" />
+                <stop offset=".4" stop-color="#f2f6ff" />
+                <stop offset="1" stop-color="#55617d" />
+              </linearGradient>
+              <clipPath id="tubClip">
+                <path d="M250 430 Q250 610 420 640 L780 640 Q950 610 950 430 Z" />
+              </clipPath>
+            </defs>
+
+            <rect width="1200" height="560" fill="url(#wallG)" />
+            <rect width="1200" height="560" fill="url(#tiles)" opacity=".7" />
+            <rect y="560" width="1200" height="240" fill="url(#floorG)" />
+            <!-- window light -->
+            <path d="M880 60 L1060 60 L1060 300 L880 300 Z" fill="#132a66" opacity=".55" />
+            <path d="M880 60 L1060 60 L1060 300 L880 300 Z M970 60 V300 M880 180 H1060" fill="none" stroke="#2a4a9a" stroke-width="6" />
+            <path d="M880 300 L1060 300 L1140 560 L760 560 Z" fill="#2e6bff" opacity=".05" />
+
+            <!-- faucet -->
+            <g id="faucet">
+              <rect x="590" y="300" width="20" height="110" rx="6" fill="url(#chromeG)" />
+              <path d="M600 300 Q600 250 650 250 L700 250 Q720 250 720 270 L720 290" fill="none" stroke="url(#chromeG)" stroke-width="22" stroke-linecap="round" />
+              <circle cx="560" cy="360" r="14" fill="url(#chromeG)" />
+              <circle cx="640" cy="360" r="14" fill="url(#chromeG)" />
+            </g>
+            <!-- drip -->
+            <ellipse id="bathDrip" cx="720" cy="310" rx="6" ry="9" fill="#7fdcff" />
+
+            <!-- tub body -->
+            <path d="M210 420 L990 420 Q1000 420 998 432 Q980 630 790 660 L410 660 Q220 630 202 432 Q200 420 210 420 Z" fill="url(#tubG)" />
+            <rect x="200" y="408" width="800" height="26" rx="13" fill="#f7faff" />
+            <!-- feet -->
+            <path d="M330 650 Q320 700 300 712 L350 712 Q360 690 380 660 Z" fill="url(#chromeG)" />
+            <path d="M870 650 Q880 700 900 712 L850 712 Q840 690 820 660 Z" fill="url(#chromeG)" />
+
+            <!-- tub interior & water -->
+            <g clip-path="url(#tubClip)">
+              <rect x="240" y="420" width="720" height="240" fill="url(#tubInner)" />
+              <g id="bathWater">
+                <path id="bathWaterSurface" d="M240 470 Q420 455 600 470 T960 470 L960 660 L240 660 Z" fill="url(#waterG)" />
+                <path d="M300 490 Q450 480 600 492 T900 488" fill="none" stroke="#c9f1ff" stroke-width="3" opacity=".5" />
+              </g>
+              <!-- swirl over drain -->
+              <g id="swirl" opacity=".7" transform="translate(600 585)">
+                <path d="M-70 0 A70 22 0 1 1 70 0" fill="none" stroke="#bfefff" stroke-width="3" stroke-dasharray="20 14" />
+                <path d="M-42 0 A42 13 0 1 0 42 0" fill="none" stroke="#bfefff" stroke-width="3" stroke-dasharray="14 10" />
+              </g>
+              <!-- drain -->
+              <ellipse id="drainGlow" cx="600" cy="585" rx="90" ry="32" fill="url(#glowRed)" opacity="0" />
+              <ellipse cx="600" cy="585" rx="26" ry="9" fill="url(#drainG)" />
+              <path d="M580 585 H620 M588 581 H612 M588 589 H612" stroke="#7d8aa8" stroke-width="1.6" />
+            </g>
+
+            <!-- bubbles (problem) -->
+            <g id="bubbles" fill="none" stroke="#d6f5ff" stroke-width="2">
+              <circle cx="560" cy="540" r="5" /><circle cx="640" cy="520" r="4" /><circle cx="610" cy="500" r="6" />
+            </g>
+          </svg>
+
+          <!-- anomaly tag -->
+          <div class="tag tag--alert" id="anomalyTag">
+            <span class="tag__dot"></span>
+            <span class="mono">SLOW DRAIN · ANOMALY BELOW</span>
+          </div>
+        </div>
+
+        <!-- Scene 2-4: Pipe tunnel -->
+        <div class="scene scene--tunnel" id="sceneTunnel">
+          <canvas id="tunnel" aria-hidden="true"></canvas>
+
+          <!-- crack on pipe wall -->
+          <div class="leak" id="leak" aria-hidden="true">
+            <svg viewBox="0 0 400 400" class="leak__svg">
+              <defs>
+                <radialGradient id="leakGlow" cx=".5" cy=".5" r=".5">
+                  <stop offset="0" stop-color="#ff2d2d" stop-opacity=".8" />
+                  <stop offset=".5" stop-color="#ff5a1f" stop-opacity=".25" />
+                  <stop offset="1" stop-color="#ff5a1f" stop-opacity="0" />
+                </radialGradient>
+                <radialGradient id="fixGlow" cx=".5" cy=".5" r=".5">
+                  <stop offset="0" stop-color="#5fd4ff" stop-opacity=".9" />
+                  <stop offset=".5" stop-color="#2e7bff" stop-opacity=".3" />
+                  <stop offset="1" stop-color="#2e7bff" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <circle cx="200" cy="200" r="190" fill="url(#leakGlow)" class="leak__glow" />
+              <circle cx="200" cy="200" r="190" fill="url(#fixGlow)" class="leak__fixglow" opacity="0" />
+              <g class="leak__crack" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M120 110 L165 160 L150 190 L205 215 L190 250 L255 300" />
+                <path d="M165 160 L205 145 L230 120" />
+                <path d="M205 215 L250 205 L282 225" />
+                <path d="M190 250 L150 280" />
+              </g>
+              <path class="leak__seam" d="M120 110 L165 160 L150 190 L205 215 L190 250 L255 300" fill="none" stroke-linecap="round" />
+              <g class="leak__spray">
+                <circle cx="205" cy="215" r="5" /><circle cx="225" cy="232" r="4" /><circle cx="186" cy="238" r="3.5" />
+                <circle cx="240" cy="210" r="3" /><circle cx="172" cy="200" r="4" /><circle cx="214" cy="250" r="3" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Magic repair circle -->
+          <svg class="spell" id="spell" viewBox="0 0 500 500" aria-hidden="true">
+            <defs>
+              <path id="spellText" d="M250,250 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0" />
+              <linearGradient id="spellG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ff7a1a" />
+                <stop offset=".5" stop-color="#ffd37a" />
+                <stop offset="1" stop-color="#5fd4ff" />
+              </linearGradient>
+            </defs>
+            <g class="spell__outer">
+              <circle cx="250" cy="250" r="228" fill="none" stroke="url(#spellG)" stroke-width="2" />
+              <circle cx="250" cy="250" r="214" fill="none" stroke="url(#spellG)" stroke-width="1" stroke-dasharray="4 10" />
+              <text class="spell__runes"><textPath href="#spellText">ᚠ ᛚ ᛟ ᚹ ✦ SEAL ✦ ᛈ ᚱ ᛟ ✦ RESTORE ✦ ᚠ ᛚ ᛟ ᚹ ✦ PRESSURE ✦ ᛈ ᚱ ᛟ ✦ FLOW ✦</textPath></text>
+            </g>
+            <g class="spell__inner">
+              <polygon points="250,70 406,340 94,340" fill="none" stroke="url(#spellG)" stroke-width="2" />
+              <polygon points="250,430 94,160 406,160" fill="none" stroke="url(#spellG)" stroke-width="2" />
+              <circle cx="250" cy="250" r="120" fill="none" stroke="url(#spellG)" stroke-width="1.5" />
+            </g>
+          </svg>
+          <div class="sparks" id="sparks" aria-hidden="true"></div>
+
+          <!-- HUD -->
+          <div class="hud" id="hud" aria-hidden="true">
+            <span class="hud__corner hud__corner--tl"></span><span class="hud__corner hud__corner--tr"></span>
+            <span class="hud__corner hud__corner--bl"></span><span class="hud__corner hud__corner--br"></span>
+            <div class="hud__sonar" id="sonar"></div>
+            <div class="hud__reticle" id="reticle"><span></span></div>
+            <div class="hud__panel hud__panel--left mono">
+              <div class="hud__row"><span>DEPTH</span><b id="hudDepth">0.0 FT</b></div>
+              <div class="hud__row"><span>PRESSURE</span><b id="hudPsi">62 PSI</b></div>
+              <div class="hud__row"><span>FLOW</span><b id="hudFlow">4.8 GPM</b></div>
+              <div class="hud__row"><span>STATUS</span><b id="hudStatus">DESCENDING</b></div>
+            </div>
+            <div class="hud__panel hud__panel--right mono">
+              <div class="hud__title">FLOW·PROS DIAGNOSTIC</div>
+              <div class="hud__bar"><span id="hudScan"></span></div>
+              <div class="hud__row"><span>SCAN</span><b id="hudScanPct">0%</b></div>
+            </div>
+            <div class="hud__alert mono" id="hudAlert">⚠ LEAK DETECTED · JOINT 14 · 2.4 GPM LOSS</div>
+            <div class="hud__ok mono" id="hudOk">✓ SEALED · PRESSURE RESTORED · 100%</div>
+          </div>
+        </div>
+
+        <!-- Scene 5: Flow restored -->
+        <div class="scene scene--flow" id="sceneFlow">
+          <div class="flow__burst" id="flowBurst"></div>
+          <svg class="flow__faucet" viewBox="0 0 600 700" aria-hidden="true">
+            <defs>
+              <linearGradient id="chrome2" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#55617d" /><stop offset=".45" stop-color="#ffffff" /><stop offset="1" stop-color="#46516b" />
+              </linearGradient>
+              <linearGradient id="streamG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#bff0ff" /><stop offset="1" stop-color="#2e9bff" stop-opacity=".2" />
+              </linearGradient>
+            </defs>
+            <path d="M120 120 L120 60 Q120 30 150 30 L380 30 Q440 30 440 90 L440 150" fill="none" stroke="url(#chrome2)" stroke-width="44" stroke-linecap="round" />
+            <rect x="98" y="110" width="44" height="80" rx="10" fill="url(#chrome2)" />
+            <rect x="410" y="140" width="60" height="22" rx="8" fill="url(#chrome2)" />
+            <g id="stream">
+              <path class="flow__stream" d="M440 165 C440 300 446 450 440 700" stroke="url(#streamG)" stroke-width="34" fill="none" stroke-linecap="round" />
+              <path class="flow__stream flow__stream--hi" d="M432 165 C432 300 438 450 432 700" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- Captions -->
+        <div class="captions">
+          <article class="cap" data-cap="0">
+            <p class="cap__num mono">01 · The Problem</p>
+            <h2 class="cap__title">That slow drain is trying to tell you something.</h2>
+            <p class="cap__body">Gurgles, drips, a water bill that keeps climbing. Something is hiding in your pipes.</p>
+          </article>
+          <article class="cap" data-cap="1">
+            <p class="cap__num mono">02 · The Descent</p>
+            <h2 class="cap__title">So we go in.</h2>
+            <p class="cap__body">We trace the problem to its source. No guessing, no tearing your home apart to find it.</p>
+          </article>
+          <article class="cap" data-cap="2">
+            <p class="cap__num mono">03 · The Detection</p>
+            <h2 class="cap__title">Found it.</h2>
+            <p class="cap__body">Leak detection pinpoints the exact crack, joint or clog, from small leaks to damaged pipes.</p>
+          </article>
+          <article class="cap" data-cap="3">
+            <p class="cap__num mono">04 · The Fix</p>
+            <h2 class="cap__title">Then, a little <em>magic.</em></h2>
+            <p class="cap__body">Licensed pros make a durable repair, done right the first time and built to last.</p>
+          </article>
+          <article class="cap cap--center" data-cap="4">
+            <p class="cap__num mono">05 · The Flow</p>
+            <h2 class="cap__title cap__title--xl">Flow, <span class="grad-text">restored.</span></h2>
+            <p class="cap__body">Find it. Fix it. Flow. That's the Flow Pros way.</p>
+          </article>
+        </div>
+
+        <div class="story__progress" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="services section" id="services">
+      <div class="blob blob--a" aria-hidden="true"></div>
+      <div class="blob blob--b" aria-hidden="true"></div>
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Our Services</p>
+          <h2 class="section__title">We fix
+            <span class="morph" aria-live="off">
+              <span class="morph__a" id="morphA">leaks.</span>
+              <span class="morph__b" id="morphB"></span>
+            </span>
+          </h2>
+          <p class="section__lead">Complete residential, commercial and industrial plumbing for homes, offices, restaurants, retail stores and commercial properties in South Florida.</p>
+        </header>
+
+        <div class="cards">
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><path d="M24 4 C24 4 10 20 10 30 a14 14 0 0 0 28 0 C38 20 24 4 24 4Z" /><path d="M18 31 a6 6 0 0 0 6 6" /></svg></div>
+            <h3>Leak Detection &amp; Repair</h3>
+            <p>From small leaks to damaged pipes, we find the issue fast and make durable, long-lasting repairs.</p>
+          </article>
+          <article class="card card--hot reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><path d="M24 4 L28 18 L42 18 L31 27 L35 42 L24 33 L13 42 L17 27 L6 18 L20 18Z" /></svg></div>
+            <h3>24/7 Emergency Plumbing</h3>
+            <p>Burst pipes, flooding, sewer backups, overflowing toilets, no water or a broken water heater. We answer.</p>
+          </article>
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16" /><path d="M24 8 C30 16 30 32 24 40 M24 8 C18 16 18 32 24 40 M10 20 H38 M10 28 H38" /></svg></div>
+            <h3>Drain Cleaning</h3>
+            <p>Clogged drains, blocked pipes and sewer line issues cleared with proven tools to restore proper flow.</p>
+          </article>
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><rect x="13" y="6" width="22" height="36" rx="6" /><path d="M24 30 c-3 0-4-3-2-6 l2-4 l2 4 c2 3 1 6-2 6Z" /><path d="M18 42 v3 M30 42 v3" /></svg></div>
+            <h3>Water Heater Services</h3>
+            <p>Installation, replacement and repair of residential and commercial water heaters.</p>
+          </article>
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><path d="M4 16 H20 V32 H44" /><path d="M4 24 H12 V40 H44" /><circle cx="20" cy="16" r="3" /><circle cx="12" cy="40" r="3" /></svg></div>
+            <h3>Repiping</h3>
+            <p>Whole-home and partial repiping with PEX, copper and CPVC for reliable water for decades.</p>
+          </article>
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><path d="M4 30 H44 M4 38 H44" /><path d="M10 30 V18 a6 6 0 0 1 12 0 V30" /><path d="M30 22 l4 4 l6 -8" /></svg></div>
+            <h3>Sewer Line Repair</h3>
+            <p>Sewer line repair and replacement that gets to the root of backups and slow drains.</p>
+          </article>
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><path d="M6 24 H26" /><path d="M26 16 L42 8 M26 24 L44 24 M26 32 L42 40" /><rect x="2" y="18" width="10" height="12" rx="2" /></svg></div>
+            <h3>Hydro Jetting</h3>
+            <p>High-pressure water that scours grease, scale and roots from your lines and leaves them like new.</p>
+          </article>
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><path d="M6 42 V20 L24 8 L42 20 V42 Z" /><path d="M18 42 V28 H30 V42" /></svg></div>
+            <h3>Residential Plumbing</h3>
+            <p>Faucets, fixtures, toilets, kitchen plumbing, garbage disposals, water filtration and more.</p>
+          </article>
+          <article class="card reveal" data-tilt>
+            <div class="card__icon"><svg viewBox="0 0 48 48"><rect x="6" y="10" width="16" height="32" /><rect x="26" y="18" width="16" height="24" /><path d="M11 16 H17 M11 22 H17 M11 28 H17 M31 24 H37 M31 30 H37" /></svg></div>
+            <h3>Commercial &amp; Industrial</h3>
+            <p>Repairs, installations, maintenance and system upgrades for businesses of every size.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="process section" id="process">
+      <div class="container process__grid">
+        <header class="section__head reveal">
+          <p class="eyebrow">Our Process</p>
+          <h2 class="section__title">From first call<br />to <span class="grad-text">final flow.</span></h2>
+          <p class="section__lead">Honest service, transparent pricing and professional workmanship at every step.</p>
+        </header>
+        <div class="process__pipe">
+          <svg class="process__svg" viewBox="0 0 120 1000" preserveAspectRatio="none" aria-hidden="true">
+            <path class="process__track" d="M60 0 V1000" />
+            <path class="process__water" id="processWater" d="M60 0 V1000" />
+          </svg>
+          <ol class="steps">
+            <li class="step"><span class="step__node">1</span><div><h3>Inspection</h3><p>A full look at your plumbing system, inside and out.</p></div></li>
+            <li class="step"><span class="step__node">2</span><div><h3>Diagnosis</h3><p>We pinpoint the real cause, not just the symptom.</p></div></li>
+            <li class="step"><span class="step__node">3</span><div><h3>Recommendation</h3><p>Clear options and honest pricing before any work begins.</p></div></li>
+            <li class="step"><span class="step__node">4</span><div><h3>Repair or Replace</h3><p>Professional workmanship and long-term solutions.</p></div></li>
+            <li class="step"><span class="step__node">5</span><div><h3>Final System Testing</h3><p>We test everything so it's right before we leave.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="stats" aria-label="Quick facts">
+      <div class="container stats__grid">
+        <div class="stat reveal"><b class="stat__num"><span data-count="24">0</span>/7</b><span>Emergency response</span></div>
+        <div class="stat reveal"><b class="stat__num"><span data-count="24">0</span>+</b><span>Cities served</span></div>
+        <div class="stat reveal"><b class="stat__num"><span data-count="2">0</span></b><span>Counties: Miami-Dade &amp; Broward</span></div>
+        <div class="stat reveal"><b class="stat__num"><span data-count="100">0</span>%</b><span>Licensed &amp; insured in Florida</span></div>
+      </div>
+    </section>
+
+    <!-- ============ VETERAN ============ -->
+    <section class="veteran section" id="veteran">
+      <div class="container veteran__grid">
+        <div class="veteran__shield reveal" aria-hidden="true">
+          <svg viewBox="0 0 200 230">
+            <defs>
+              <clipPath id="shieldClip"><path d="M100 6 L190 36 V110 C190 170 150 205 100 224 C50 205 10 170 10 110 V36 Z" /></clipPath>
+              <linearGradient id="shieldEdge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb36b" /><stop offset="1" stop-color="#ff5a1f" /></linearGradient>
+            </defs>
+            <g clip-path="url(#shieldClip)">
+              <rect width="200" height="100" fill="#14286b" />
+              <g fill="#fff"><circle cx="55" cy="55" r="9" /><circle cx="100" cy="45" r="9" /><circle cx="145" cy="55" r="9" /></g>
+              <g fill="#c8202f"><rect y="100" width="200" height="22" /><rect y="144" width="200" height="22" /><rect y="188" width="200" height="22" /></g>
+              <g fill="#f3f3f3"><rect y="122" width="200" height="22" /><rect y="166" width="200" height="22" /><rect y="210" width="200" height="22" /></g>
+            </g>
+            <path d="M100 6 L190 36 V110 C190 170 150 205 100 224 C50 205 10 170 10 110 V36 Z" fill="none" stroke="url(#shieldEdge)" stroke-width="8" />
+          </svg>
+          <div class="veteran__glow"></div>
+        </div>
+        <div class="veteran__copy reveal">
+          <p class="eyebrow">Veteran Owned &amp; Operated</p>
+          <h2 class="section__title">Served our country.<br /><span class="grad-text grad-text--fire">Now serving your home.</span></h2>
+          <p>We're more than plumbers. We're your neighbors. Flow Pros brings real field experience, discipline and integrity to every job, big or small.</p>
+          <ul class="checks">
+            <li>Honest service and transparent pricing</li>
+            <li>Professional workmanship</li>
+            <li>Long-term plumbing solutions</li>
+            <li>Fast emergency response</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EMERGENCY ============ -->
+    <section class="emergency" id="emergency">
+      <svg class="emergency__wave emergency__wave--top" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0,40 C360,100 1080,-20 1440,40 L1440,0 L0,0 Z" /></svg>
+      <div class="emergency__water" aria-hidden="true"><span></span><span></span></div>
+      <div class="container emergency__inner reveal">
+        <p class="eyebrow eyebrow--light"><span class="pulse-dot pulse-dot--white"></span> Emergency Line Open</p>
+        <h2 class="emergency__title">Burst pipe at 2 AM?</h2>
+        <p class="emergency__sub">Flooding, sewer backups, no water. Don't wait for the damage to spread.</p>
+        <div class="emergency__phones">
+          <a href="tel:+17868571560" class="phone-pill magnetic"><small>Miami-Dade</small>(786) 857-1560</a>
+          <a href="tel:+19549933020" class="phone-pill magnetic"><small>Broward</small>(954) 993-3020</a>
+        </div>
+      </div>
+      <svg class="emergency__wave emergency__wave--bottom" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C360,0 1080,120 1440,60 L1440,100 L0,100 Z" /></svg>
+    </section>
+
+    <!-- ============ AREAS ============ -->
+    <section class="areas section" id="areas">
+      <div class="container">
+        <header class="section__head section__head--center reveal">
+          <p class="eyebrow">Service Areas</p>
+          <h2 class="section__title">Flowing across <span class="grad-text">South Florida.</span></h2>
+          <p class="section__lead">Same-day service in most areas, depending on location and availability.</p>
+        </header>
+      </div>
+      <div class="marquee" aria-label="Miami-Dade County cities">
+        <div class="marquee__track">
+          <span>Miami</span><span>Hialeah</span><span>Doral</span><span>Kendall</span><span>Homestead</span><span>Coral Gables</span><span>Miami Gardens</span><span>Cutler Bay</span><span>Pinecrest</span><span>South Miami</span><span>Florida City</span><span>Westchester</span><span>Miami Springs</span><span>Brickell</span><span>Wynwood</span><span>Coconut Grove</span>
+        </div>
+      </div>
+      <div class="marquee marquee--reverse" aria-label="Broward County cities">
+        <div class="marquee__track">
+          <span>Fort Lauderdale</span><span>Pembroke Pines</span><span>Miramar</span><span>Weston</span><span>Plantation</span><span>Davie</span><span>Cooper City</span><span>Coral Springs</span><span>Hollywood</span><span>Hallandale Beach</span><span>Pembroke Park</span>
+        </div>
+      </div>
+      <div class="container areas__counties">
+        <div class="county reveal"><h3>Miami-Dade County</h3><p>Miami, Hialeah, Doral, Kendall, Homestead, Coral Gables, Miami Gardens, Cutler Bay, Pinecrest, South Miami, Florida City, Westchester, Miami Springs</p></div>
+        <div class="county reveal"><h3>Broward County</h3><p>Fort Lauderdale, Pembroke Pines, Miramar, Weston, Plantation, Davie, Cooper City, Coral Springs, Hollywood, Hallandale Beach, Pembroke Park</p></div>
+      </div>
+    </section>
+
+    <!-- ============ FINANCING ============ -->
+    <section class="financing section">
+      <div class="container">
+        <div class="finance-card reveal">
+          <div class="finance-card__liquid" aria-hidden="true"></div>
+          <div>
+            <p class="eyebrow">Flexible Financing</p>
+            <h2 class="finance-card__title">Big repair? Pay over time.</h2>
+            <p>Pre-qualify through Acorn Finance and compare offers from multiple lenders. Checking offers won't affect your credit score.</p>
+          </div>
+          <a href="https://www.acornfinance.com/pre-qualify/?d=08O07&amp;utm_medium=web_pre_qual_banner" target="_blank" rel="noopener" class="btn btn--glass magnetic"><span>Check My Offers</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq section" id="faq">
+      <div class="container faq__grid">
+        <header class="section__head reveal">
+          <p class="eyebrow">FAQ</p>
+          <h2 class="section__title">Questions,<br /><span class="grad-text">answered.</span></h2>
+        </header>
+        <div class="faq__list">
+          <details class="faq__item reveal" open>
+            <summary>Do you offer 24/7 emergency plumbing?</summary>
+            <p>Yes. Burst pipes, leaks, flooding, sewer backups and water heater breakdowns don't wait for business hours, and neither do we.</p>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Are you licensed and insured?</summary>
+            <p>Yes. Flow Pros Plumbing is fully licensed and insured in Florida.</p>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Do you offer same-day service?</summary>
+            <p>In most cases, yes. We aim for fast same-day or emergency response depending on your location and availability.</p>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Do you handle both residential and commercial?</summary>
+            <p>Absolutely. We serve homeowners as well as offices, restaurants, retail stores, commercial properties and industrial facilities.</p>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Can I finance a larger repair?</summary>
+            <p>Yes. Flexible plumbing financing is available through Acorn Finance. You can check offers without affecting your credit score.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact section" id="contact">
+      <div class="blob blob--c" aria-hidden="true"></div>
+      <div class="container contact__grid">
+        <div class="contact__info reveal">
+          <p class="eyebrow">Get a Free Quote</p>
+          <h2 class="section__title">Let's get your<br /><span class="grad-text">water flowing.</span></h2>
+          <ul class="contact__list">
+            <li><span class="mono">CALL</span><a href="tel:+17868571560">(786) 857-1560</a><a href="tel:+19549933020">(954) 993-3020</a></li>
+            <li><span class="mono">EMAIL</span><a href="mailto:Info@theflowprosplumbing.com">Info@theflowprosplumbing.com</a></li>
+            <li><span class="mono">HOURS</span><p>Monday–Saturday · 8am–6pm<br />24/7 emergency service</p></li>
+            <li><span class="mono">AREA</span><p>Miami &amp; surrounding areas, South Florida</p></li>
+          </ul>
+          <a href="https://wa.me/17868571560" target="_blank" rel="noopener" class="btn btn--whatsapp magnetic">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+            <span>WhatsApp Us</span>
+          </a>
+        </div>
+
+        <form class="contact__form reveal" id="quoteForm" novalidate>
+          <div class="field"><input id="fName" name="name" required placeholder=" " autocomplete="name" /><label for="fName">Full name</label></div>
+          <div class="field"><input id="fPhone" name="phone" type="tel" required placeholder=" " autocomplete="tel" /><label for="fPhone">Phone</label></div>
+          <div class="field"><input id="fCity" name="city" placeholder=" " autocomplete="address-level2" /><label for="fCity">City</label></div>
+          <div class="field field--select">
+            <select id="fService" name="service">
+              <option>Emergency Plumbing</option><option>Leak Detection &amp; Repair</option><option>Drain Cleaning</option><option>Water Heater</option><option>Repiping</option><option>Sewer Line</option><option>Hydro Jetting</option><option>Commercial / Industrial</option><option>Other</option>
+            </select>
+            <label for="fService">Service needed</label>
+          </div>
+          <div class="field field--full"><textarea id="fMsg" name="message" rows="4" placeholder=" "></textarea><label for="fMsg">Tell us what's going on</label></div>
+          <button type="submit" class="btn btn--fire btn--block magnetic"><span>Send My Request</span></button>
+          <p class="form__note" id="formNote">Opens WhatsApp with your request ready to send. Prefer email? <a href="mailto:Info@theflowprosplumbing.com">Info@theflowprosplumbing.com</a></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__big" aria-hidden="true">FLOW PROS</div>
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <img src="assets/logo.webp" alt="Flow Pros Plumbing" width="90" height="90" />
+        <p>Flow Pros Plumbing LLC<br />Veteran Owned &amp; Operated<br />Licensed &amp; Insured in Florida</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="#services">Emergency Plumbing</a><a href="#services">Leak Detection</a><a href="#services">Drain Cleaning</a><a href="#services">Water Heaters</a><a href="#services">Repiping</a><a href="#services">Sewer &amp; Hydro Jetting</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:+17868571560">(786) 857-1560</a><a href="tel:+19549933020">(954) 993-3020</a><a href="mailto:Info@theflowprosplumbing.com">Info@theflowprosplumbing.com</a><span>Mon–Sat 8am–6pm · 24/7 Emergencies</span>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>© <span id="year">2026</span> Flow Pros Plumbing LLC. All rights reserved.</span>
+      <span>*Same-day service in most areas, depending on location and availability.</span>
+    </div>
+  </footer>
+
+  <!-- Mobile sticky call -->
+  <a href="tel:+17868571560" class="sticky-call" aria-label="Call Flow Pros Plumbing">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+    Call Now
+  </a>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/hero-shader.js"></script>
+  <script src="js/tunnel.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
