@@ -175,145 +175,22 @@
     <section class="story" id="story" aria-label="How we find and fix plumbing problems">
       <div class="story__stage" id="stage">
 
-        <!-- Scene 1: The bathroom / tub -->
-        <div class="scene scene--bath" id="sceneBath">
-          <svg class="bath" id="bathSVG" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <defs>
-              <linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#0b1538" />
-                <stop offset="1" stop-color="#070d24" />
-              </linearGradient>
-              <pattern id="tiles" width="60" height="60" patternUnits="userSpaceOnUse">
-                <rect width="60" height="60" fill="none" />
-                <path d="M60 0H0V60" fill="none" stroke="#1a2a5c" stroke-width="2" />
-              </pattern>
-              <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#0d1a40" />
-                <stop offset="1" stop-color="#050a1c" />
-              </linearGradient>
-              <linearGradient id="tubG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#f4f8ff" />
-                <stop offset=".55" stop-color="#c9d6ef" />
-                <stop offset="1" stop-color="#7d8fb8" />
-              </linearGradient>
-              <linearGradient id="tubInner" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#8ea2c9" />
-                <stop offset="1" stop-color="#dfe8f8" />
-              </linearGradient>
-              <linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#6fd6ff" stop-opacity=".85" />
-                <stop offset="1" stop-color="#1d6fd6" stop-opacity=".9" />
-              </linearGradient>
-              <radialGradient id="drainG" cx=".5" cy=".5" r=".5">
-                <stop offset="0" stop-color="#000" />
-                <stop offset=".7" stop-color="#03050d" />
-                <stop offset=".85" stop-color="#3a4766" />
-                <stop offset="1" stop-color="#b9c5dc" />
-              </radialGradient>
-              <radialGradient id="glowRed" cx=".5" cy=".5" r=".5">
-                <stop offset="0" stop-color="#ff3b3b" stop-opacity=".9" />
-                <stop offset="1" stop-color="#ff3b3b" stop-opacity="0" />
-              </radialGradient>
-              <linearGradient id="chromeG" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#6b7a99" />
-                <stop offset=".4" stop-color="#f2f6ff" />
-                <stop offset="1" stop-color="#55617d" />
-              </linearGradient>
-              <clipPath id="tubClip">
-                <path d="M250 430 Q250 610 420 640 L780 640 Q950 610 950 430 Z" />
-              </clipPath>
-            </defs>
+        <!-- 3D scene: luxury bathroom -> down the drain -> pipe network -->
+        <div class="scene scene--3d" id="scene3d">
+          <canvas id="story3d" aria-hidden="true"></canvas>
+          <div class="scene3d__grain" aria-hidden="true"></div>
+          <div class="water-veil" id="waterVeil" aria-hidden="true"></div>
 
-            <rect width="1200" height="560" fill="url(#wallG)" />
-            <rect width="1200" height="560" fill="url(#tiles)" opacity=".7" />
-            <rect y="560" width="1200" height="240" fill="url(#floorG)" />
-            <!-- window light -->
-            <path d="M880 60 L1060 60 L1060 300 L880 300 Z" fill="#132a66" opacity=".55" />
-            <path d="M880 60 L1060 60 L1060 300 L880 300 Z M970 60 V300 M880 180 H1060" fill="none" stroke="#2a4a9a" stroke-width="6" />
-            <path d="M880 300 L1060 300 L1140 560 L760 560 Z" fill="#2e6bff" opacity=".05" />
-
-            <!-- faucet -->
-            <g id="faucet">
-              <rect x="590" y="300" width="20" height="110" rx="6" fill="url(#chromeG)" />
-              <path d="M600 300 Q600 250 650 250 L700 250 Q720 250 720 270 L720 290" fill="none" stroke="url(#chromeG)" stroke-width="22" stroke-linecap="round" />
-              <circle cx="560" cy="360" r="14" fill="url(#chromeG)" />
-              <circle cx="640" cy="360" r="14" fill="url(#chromeG)" />
-            </g>
-            <!-- drip -->
-            <ellipse id="bathDrip" cx="720" cy="310" rx="6" ry="9" fill="#7fdcff" />
-
-            <!-- tub body -->
-            <path d="M210 420 L990 420 Q1000 420 998 432 Q980 630 790 660 L410 660 Q220 630 202 432 Q200 420 210 420 Z" fill="url(#tubG)" />
-            <rect x="200" y="408" width="800" height="26" rx="13" fill="#f7faff" />
-            <!-- feet -->
-            <path d="M330 650 Q320 700 300 712 L350 712 Q360 690 380 660 Z" fill="url(#chromeG)" />
-            <path d="M870 650 Q880 700 900 712 L850 712 Q840 690 820 660 Z" fill="url(#chromeG)" />
-
-            <!-- tub interior & water -->
-            <g clip-path="url(#tubClip)">
-              <rect x="240" y="420" width="720" height="240" fill="url(#tubInner)" />
-              <g id="bathWater">
-                <path id="bathWaterSurface" d="M240 470 Q420 455 600 470 T960 470 L960 660 L240 660 Z" fill="url(#waterG)" />
-                <path d="M300 490 Q450 480 600 492 T900 488" fill="none" stroke="#c9f1ff" stroke-width="3" opacity=".5" />
-              </g>
-              <!-- swirl over drain -->
-              <g id="swirl" opacity=".7" transform="translate(600 585)">
-                <path d="M-70 0 A70 22 0 1 1 70 0" fill="none" stroke="#bfefff" stroke-width="3" stroke-dasharray="20 14" />
-                <path d="M-42 0 A42 13 0 1 0 42 0" fill="none" stroke="#bfefff" stroke-width="3" stroke-dasharray="14 10" />
-              </g>
-              <!-- drain -->
-              <ellipse id="drainGlow" cx="600" cy="585" rx="90" ry="32" fill="url(#glowRed)" opacity="0" />
-              <ellipse cx="600" cy="585" rx="26" ry="9" fill="url(#drainG)" />
-              <path d="M580 585 H620 M588 581 H612 M588 589 H612" stroke="#7d8aa8" stroke-width="1.6" />
-            </g>
-
-            <!-- bubbles (problem) -->
-            <g id="bubbles" fill="none" stroke="#d6f5ff" stroke-width="2">
-              <circle cx="560" cy="540" r="5" /><circle cx="640" cy="520" r="4" /><circle cx="610" cy="500" r="6" />
-            </g>
-          </svg>
-
-          <!-- anomaly tag -->
+          <!-- anomaly tag (tracked to the drain in 3D) -->
           <div class="tag tag--alert" id="anomalyTag">
             <span class="tag__dot"></span>
             <span class="mono">SLOW DRAIN · ANOMALY BELOW</span>
           </div>
-        </div>
-
-        <!-- Scene 2-4: Pipe tunnel -->
-        <div class="scene scene--tunnel" id="sceneTunnel">
-          <canvas id="tunnel" aria-hidden="true"></canvas>
-
-          <!-- crack on pipe wall -->
-          <div class="leak" id="leak" aria-hidden="true">
-            <svg viewBox="0 0 400 400" class="leak__svg">
-              <defs>
-                <radialGradient id="leakGlow" cx=".5" cy=".5" r=".5">
-                  <stop offset="0" stop-color="#ff2d2d" stop-opacity=".8" />
-                  <stop offset=".5" stop-color="#ff5a1f" stop-opacity=".25" />
-                  <stop offset="1" stop-color="#ff5a1f" stop-opacity="0" />
-                </radialGradient>
-                <radialGradient id="fixGlow" cx=".5" cy=".5" r=".5">
-                  <stop offset="0" stop-color="#5fd4ff" stop-opacity=".9" />
-                  <stop offset=".5" stop-color="#2e7bff" stop-opacity=".3" />
-                  <stop offset="1" stop-color="#2e7bff" stop-opacity="0" />
-                </radialGradient>
-              </defs>
-              <circle cx="200" cy="200" r="190" fill="url(#leakGlow)" class="leak__glow" />
-              <circle cx="200" cy="200" r="190" fill="url(#fixGlow)" class="leak__fixglow" opacity="0" />
-              <g class="leak__crack" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M120 110 L165 160 L150 190 L205 215 L190 250 L255 300" />
-                <path d="M165 160 L205 145 L230 120" />
-                <path d="M205 215 L250 205 L282 225" />
-                <path d="M190 250 L150 280" />
-              </g>
-              <path class="leak__seam" d="M120 110 L165 160 L150 190 L205 215 L190 250 L255 300" fill="none" stroke-linecap="round" />
-              <g class="leak__spray">
-                <circle cx="205" cy="215" r="5" /><circle cx="225" cy="232" r="4" /><circle cx="186" cy="238" r="3.5" />
-                <circle cx="240" cy="210" r="3" /><circle cx="172" cy="200" r="4" /><circle cx="214" cy="250" r="3" />
-              </g>
-            </svg>
+          <div class="tag tag--leak" id="leakTag">
+            <span class="tag__dot"></span>
+            <span class="mono">JOINT 14</span>
           </div>
+
 
           <!-- Magic repair circle -->
           <svg class="spell" id="spell" viewBox="0 0 500 500" aria-hidden="true">
@@ -708,7 +585,10 @@
   <script src="js/vendor/ScrollTrigger.min.js"></script>
   <script src="js/vendor/lenis.min.js"></script>
   <script src="js/hero-shader.js"></script>
-  <script src="js/tunnel.js"></script>
   <script src="js/main.js"></script>
+  <script type="importmap">
+    { "imports": { "three": "./js/vendor/three.module.min.js", "three/addons/": "./js/vendor/addons/" } }
+  </script>
+  <script type="module" src="js/story3d.js"></script>
 </body>
 </html>

@@ -10,9 +10,9 @@ Veteran-owned plumbing in Miami-Dade & Broward. Static, no build step.
 - `index.html`: all content
 - `css/style.css`: design system and layout
 - `js/hero-shader.js`: WebGL liquid hero background
-- `js/tunnel.js`: canvas pipe-tunnel flythrough
-- `js/main.js`: preloader, hero intro, pinned scroll story (GSAP ScrollTrigger), interactions
-- `js/vendor/`: GSAP 3.12.5, ScrollTrigger, Lenis (bundled locally)
+- `js/story3d.js`: real-time Three.js scene for the scroll story: a neon luxury bathroom (glossy tub, transmissive water with a whirlpool, chrome filler, Miami-skyline window, logo neon sign), the dive down the drain, and the 3D pipe network with flowing water, the leak and the repair
+- `js/main.js`: preloader, hero intro, pinned scroll timeline (GSAP ScrollTrigger) driving `window.Story3DState`, interactions
+- `js/vendor/`: GSAP 3.12.5, ScrollTrigger, Lenis, Three.js r160 and its post-processing add-ons (all bundled locally)
 
 ## Run locally
 ```bash

@@ -173,25 +173,25 @@
      THE WIZARD'S DESCENT — pinned scroll story
      ========================================================= */
   (function story() {
-    const T = window.Tunnel ? window.Tunnel.state : { travel: 0, cruise: 1, alert: 0, fixed: 0, flow: .4 };
+    // Shared state read every frame by js/story3d.js (the Three.js scene)
+    const S = window.Story3DState = Object.assign(window.Story3DState || {}, {
+      camBath: 0,   // 0..1 camera path through the bathroom and down to the drain
+      water: 0,     // tub water level rise
+      glow: 0,      // red anomaly glow from the drain
+      vortex: 0,    // whirlpool forming over the drain
+      grate: 0,     // drain grate opening
+      pipe: 0,      // 0..1 progress along the pipe network
+      leakU: .58,   // where the camera stops to inspect the leak
+      look: 0,      // camera turns to face the crack
+      alert: 0, fixed: 0, crack: 1, flow: .5, exit: 0,
+      active: false
+    });
     const caps = $$(".cap"), dots = $$(".story__progress .dot");
     const hud = $("#hud");
     const el = {
       depth: $("#hudDepth"), psi: $("#hudPsi"), flow: $("#hudFlow"), status: $("#hudStatus"),
       scan: $("#hudScan"), scanPct: $("#hudScanPct")
     };
-
-    // ambient bath animation (independent of scroll)
-    if (!reduce) {
-      gsap.timeline({ repeat: -1, repeatDelay: .8 })
-        .fromTo("#bathDrip", { attr: { cy: 300, ry: 4 }, opacity: 0 }, { attr: { cy: 312, ry: 9 }, opacity: 1, duration: .7 })
-        .to("#bathDrip", { attr: { cy: 470 }, duration: .45, ease: "power2.in" })
-        .to("#bathDrip", { opacity: 0, duration: .05 });
-      gsap.to("#swirl path", { strokeDashoffset: -68, duration: 1.4, ease: "none", repeat: -1 });
-      $$("#bubbles circle").forEach((c, i) => {
-        gsap.fromTo(c, { attr: { cy: 580 }, opacity: 0 }, { attr: { cy: 470 }, opacity: 1, duration: 2.2, delay: i * .7, repeat: -1, ease: "sine.in", yoyo: false });
-      });
-    }
 
     // sparks for the repair spell
     const sparksBox = $("#sparks");
@@ -201,66 +201,66 @@
       return { s, x: Math.cos(a) * d, y: Math.sin(a) * d };
     });
     gsap.set(sparks.map(o => o.s), { opacity: 0 });
-    gsap.set(["#leak", "#spell", "#reticle"], { xPercent: -50, yPercent: -50, x: 0, y: 0 });
+    gsap.set(["#spell", "#reticle"], { xPercent: -50, yPercent: -50, x: 0, y: 0 });
     gsap.set(".cap--center", { xPercent: -50, x: 0 });
 
     const tl = gsap.timeline({ defaults: { ease: "none" } });
-    const at = (t, fn) => tl.add(fn, t);
+    tl.set({}, {}, 100); // timeline length = 100 units
 
     // --- Scene 1: The problem in the tub
-    tl.set({}, {}, 100); // timeline length = 100 units
     tl.fromTo(caps[0], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 4, ease: "power2.out" }, 0)
-      .to("#bathWater", { y: -28, duration: 14 }, 0)
-      .to("#anomalyTag", { opacity: 1, y: -10, duration: 3 }, 5)
-      .fromTo("#drainGlow", { opacity: 0 }, { opacity: 1, duration: 4, repeat: 1, yoyo: true }, 6)
-      .to("#drainGlow", { opacity: .9, duration: 2 }, 14)
+      .fromTo(S, { camBath: 0 }, { camBath: .4, duration: 16, ease: "sine.inOut" }, 0)
+      .fromTo(S, { water: 0 }, { water: 1, duration: 14 }, 0)
+      .fromTo(S, { glow: 0 }, { glow: 1, duration: 3, repeat: 1, yoyo: true }, 5)
+      .to(S, { glow: 1, duration: 3 }, 11)
+      .to("#anomalyTag", { opacity: 1, duration: 2 }, 6)
       .to(caps[0], { autoAlpha: 0, y: -30, duration: 2 }, 14)
       .to("#anomalyTag", { opacity: 0, duration: 2 }, 15)
 
-    // --- Scene 2: Dive into the drain
+    // --- Scene 2: Down the drain
       .fromTo(caps[1], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 3, ease: "power2.out" }, 16)
-      .fromTo("#bathSVG", { attr: { viewBox: "0 0 1200 800" } }, { attr: { viewBox: "594 582 12 8" }, duration: 14, ease: "power3.in" }, 16)
-      .to("#sceneTunnel", { opacity: 1, duration: 3 }, 28)
-      .fromTo(T, { travel: 0 }, { travel: 34, duration: 18 }, 28)
+      .to(S, { camBath: 1, duration: 14, ease: "power2.in" }, 16)
+      .to(S, { vortex: 1, duration: 9, ease: "power1.in" }, 16)
+      .to(S, { grate: 1, duration: 4, ease: "power2.inOut" }, 24)
+      .fromTo(S, { pipe: 0 }, { pipe: .5, duration: 16, ease: "power1.in", immediateRender: false }, 30)
       .to(hud, { opacity: 1, duration: 3 }, 32)
       .to(caps[1], { autoAlpha: 0, y: -30, duration: 2 }, 43)
 
     // --- Scene 3: Detection
       .fromTo(caps[2], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 3, ease: "power2.out" }, 46)
-      .to(T, { cruise: 0, flow: .25, duration: 4 }, 44)
+      .to(S, { pipe: S.leakU, duration: 8, ease: "power2.out" }, 46)
+      .to(S, { flow: .3, duration: 4 }, 46)
       .to("#sonar", { opacity: 1, duration: 2 }, 46)
-      .fromTo(T, { travel: 34 }, { travel: 37, duration: 10, ease: "power2.out", immediateRender: false }, 46)
-      .to(T, { alert: 1, duration: 4 }, 51)
-      .fromTo("#leak", { scale: .15, opacity: 0 }, { scale: 1, opacity: 1, duration: 7, ease: "power2.out" }, 49)
+      .to(S, { look: 1, duration: 6, ease: "power2.inOut" }, 50)
+      .to(S, { alert: 1, duration: 4 }, 51)
       .to("#sonar", { opacity: 0, duration: 2 }, 55)
-      .fromTo("#reticle", { scale: 2.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 3, ease: "back.out(2)" }, 54)
+      .fromTo("#reticle", { scale: 2.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 3, ease: "back.out(2)" }, 55)
+      .to("#leakTag", { opacity: 1, duration: 2 }, 56)
       .fromTo("#hudAlert", { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.5 }, 56)
       .to(caps[2], { autoAlpha: 0, y: -30, duration: 2 }, 60)
 
     // --- Scene 4: The fix (a little magic)
       .fromTo(caps[3], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 3, ease: "power2.out" }, 62)
       .to("#reticle", { opacity: 0, scale: .6, duration: 2 }, 62)
+      .to("#leakTag", { opacity: 0, duration: 2 }, 62)
       .to("#hudAlert", { autoAlpha: 0, duration: 1.5 }, 64)
       .fromTo("#spell", { scale: .3, rotate: -90, opacity: 0 }, { scale: 1, rotate: 0, opacity: 1, duration: 5, ease: "back.out(1.4)" }, 62)
       .to(sparks.map(o => o.s), { opacity: 1, duration: .5 }, 66);
     sparks.forEach((o, i) => {
       tl.fromTo(o.s, { x: 0, y: 0, scale: 1.4 }, { x: o.x, y: o.y, scale: 0, duration: 6, ease: "power2.out" }, 66 + (i % 4) * .4);
     });
-    tl.to(".leak__seam", { strokeDashoffset: 0, duration: 5, ease: "power1.inOut" }, 66)
-      .to(".leak__spray", { opacity: 0, scale: .2, transformOrigin: "50% 50%", duration: 3 }, 66)
-      .to(".leak__crack", { opacity: 0, duration: 3 }, 70)
-      .to(".leak__glow", { opacity: 0, duration: 3 }, 68)
-      .to(".leak__fixglow", { opacity: 1, duration: 3 }, 68)
-      .to(T, { alert: 0, fixed: 1, duration: 4 }, 69)
+    tl.to(S, { crack: 0, duration: 5, ease: "power1.inOut" }, 67)
+      .to(S, { alert: 0, fixed: 1, duration: 4 }, 69)
       .to("#hudOk", { opacity: 1, duration: 1.5 }, 72)
       .to(caps[3], { autoAlpha: 0, y: -30, duration: 2 }, 76)
       .to("#spell", { scale: 1.8, opacity: 0, duration: 4, ease: "power2.in" }, 75)
-      .to("#leak", { scale: 3, opacity: 0, duration: 5, ease: "power2.in" }, 77)
+      .to(S, { look: 0, duration: 4, ease: "power2.inOut" }, 75)
       .to("#hudOk", { opacity: 0, duration: 2 }, 78)
 
     // --- Scene 5: Flow restored — rush out the faucet
-      .to(T, { cruise: 1, flow: 2.2, duration: 3 }, 77)
-      .fromTo(T, { travel: 37 }, { travel: 90, duration: 10, ease: "power2.in", immediateRender: false }, 77)
+      .to(S, { flow: 2.4, duration: 3 }, 77)
+      .to(S, { pipe: 1, duration: 10, ease: "power2.in" }, 77)
+      .to(S, { exit: 1, duration: 5, ease: "power2.in" }, 82)
       .to(hud, { opacity: 0, duration: 2 }, 82)
       .to("#flowBurst", { opacity: 1, duration: 2.5, ease: "power2.in" }, 84.5)
       .set("#sceneFlow", { opacity: 1 }, 87)
@@ -271,10 +271,8 @@
     const marks = [0, 16, 46, 62, 88];
     let lastStage = -1;
     function hudUpdate(p) {
-      // p = 0..100 timeline position
-      const depth = Math.max(0, T.travel * 0.72);
-      el.depth.textContent = depth.toFixed(1) + " FT";
-      let psi = 62, gpm = 4.8, status = "DESCENDING", stage = 0;
+      el.depth.textContent = (S.pipe * 48).toFixed(1) + " FT";
+      let psi = 62, gpm = 4.8, status = p < 30 ? "STANDBY" : "DESCENDING", stage = 0;
       if (p >= 46 && p < 62) { const k = gsap.utils.clamp(0, 1, (p - 49) / 7); psi = 62 - 24 * k; gpm = 4.8 - 2.4 * k; status = k < 1 ? "SCANNING…" : "LEAK FOUND"; }
       else if (p >= 62 && p < 72) { const k = gsap.utils.clamp(0, 1, (p - 66) / 6); psi = 38 + 24 * k; gpm = 2.4 + 2.4 * k; status = "REPAIRING"; }
       else if (p >= 72) { status = "FLOW RESTORED"; }
@@ -301,8 +299,12 @@
       animation: tl,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      onUpdate: () => hudUpdate(tl.time()),
-      onToggle: self => { if (!window.Tunnel) return; self.isActive ? window.Tunnel.start() : window.Tunnel.stop(); }
+      onUpdate: () => hudUpdate(tl.time())
+    });
+    // render the 3D scene only while the story is anywhere on screen
+    ScrollTrigger.create({
+      trigger: "#story", start: "top bottom", end: () => window._storyST.end + window.innerHeight,
+      onToggle: self => { S.active = self.isActive; window.Story3D && window.Story3D.wake(); }
     });
     hudUpdate(0);
   })();
@@ -448,5 +450,4 @@
     $("#formNote").innerHTML = "Thanks! Your request is ready in WhatsApp. Prefer to call? <a href='tel:+17868571560'>(786) 857-1560</a>";
   });
 
-  addEventListener("resize", () => window.Tunnel && window.Tunnel.resize());
 })();
